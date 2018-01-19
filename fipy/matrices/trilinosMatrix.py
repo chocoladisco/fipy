@@ -122,7 +122,7 @@ class _TrilinosMatrix(_SparseMatrix):
 
     @property
     def _range(self):
-        return (range(self.rowMap.NumGlobalElements()), self.rowMap.MyGlobalElements())
+        return (list(range(self.rowMap.NumGlobalElements())), self.rowMap.MyGlobalElements())
 
     def __setitem__(self, index, value):
         self.matrix[index] = value
@@ -437,8 +437,8 @@ class _TrilinosMatrix(_SparseMatrix):
         if not self.matrix.Filled():
             err = self.matrix.InsertGlobalValues(id1, id2, vector)
             if err < 0:
-                raise RuntimeError, "Processor %d, error code %d" \
-                  % (self.comm.MyPID(), err)
+                raise RuntimeError("Processor %d, error code %d" \
+                  % (self.comm.MyPID(), err))
         else:
             if self.matrix.SumIntoGlobalValues(id1, id2, vector) != 0:
                 import warnings
@@ -642,7 +642,7 @@ class _TrilinosMeshMatrix(_TrilinosMatrixFromShape):
 
     @property
     def _globalCommonColIDs(self):
-        return range(0, self.numberOfVariables, self.mesh.globalNumberOfCells)
+        return list(range(0, self.numberOfVariables, self.mesh.globalNumberOfCells))
 
     @property
     def _globalOverlappingColIDs(self):

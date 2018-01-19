@@ -239,7 +239,7 @@ def getShape(arr):
     elif type(arr) in (type(1), type(1.)):
         return ()
     else:
-        raise AttributeError, "No attribute 'shape'"
+        raise AttributeError("No attribute 'shape'")
 
 def rank(a):
     """
@@ -371,7 +371,7 @@ def tostring(arr, max_line_width=75, precision=8, suppress_small=False, separato
             from numpy.core.arrayprint import _formatInteger
             return _formatInteger(arr, format='%d')
     else:
-        raise TypeError, 'cannot convert ' + str(arr) + ' to string'
+        raise TypeError('cannot convert ' + str(arr) + ' to string')
 
 #########################
 #                       #
@@ -652,7 +652,7 @@ def take(a, indices, axis=0, fill_value=None):
     elif type(a) is type(MA.array((0))):
         taken = MA.take(a, indices, axis=axis)
     else:
-        raise TypeError, 'cannot take from %s object: %s' % (type(a), `a`)
+        raise TypeError('cannot take from %s object: %s' % (type(a), repr(a)))
 
     if fill_value is not None and type(taken) is type(MA.array((0))):
         taken = taken.filled(fill_value=fill_value)
@@ -660,7 +660,7 @@ def take(a, indices, axis=0, fill_value=None):
     return taken
 
 if not hasattr(NUMERIX, 'empty'):
-    print 'defining empty'
+    print('defining empty')
     if inline.doInline:
         def empty(shape, dtype='d', order='C'):
             """
@@ -720,7 +720,7 @@ while (return_val.refcount() > 1) {
 """
 
             return weave.inline(code,
-                         local_dict.keys(),
+                         list(local_dict.keys()),
                          local_dict=local_dict,
                          type_converters=weave.converters.blitz,
                          compiler='gcc',
@@ -854,7 +854,7 @@ if not (hasattr(NUMERIX, 'savetxt') and hasattr(NUMERIX, 'loadtxt')):
             vals = line.split(delimiter)
             if converterseq is None:
                converterseq = [converters.get(j,defconv) \
-                               for j in xrange(len(vals))]
+                               for j in range(len(vals))]
             if usecols is not None:
                 row = [converterseq[j](vals[j]) for j in usecols]
             else:
@@ -973,7 +973,7 @@ def _compressIndexSubspaces(index, i, broadcastshape = ()):
 
             broadcastshape = _broadcastShape(broadcastshape, element.shape)
             if broadcastshape is None:
-                raise ValueError, "shape mismatch: objects cannot be broadcast to a single shape"
+                raise ValueError("shape mismatch: objects cannot be broadcast to a single shape")
         skip += 1
 
     return broadcastshape, skip
@@ -1110,9 +1110,9 @@ def _indexShape(index, arrayShape):
         # "If the lenth of the selection tuple is larger than N (=X.ndim) an error
         # is raised."
         if len(arrayShape) == 0:
-            raise IndexError, "0-d arrays can't be indexed"
+            raise IndexError("0-d arrays can't be indexed")
         else:
-            raise IndexError, "invalid index"
+            raise IndexError("invalid index")
     else:
         # "If the selection tuple is smaller than N, then as many ':' objects as
         # needed are added to the end of the selection tuple so that the modified
@@ -1160,7 +1160,7 @@ def _indexShape(index, arrayShape):
             indexShape += ((stop - start) // stride,)
             j += 1
         else:
-            raise IndexError, "invalid index"
+            raise IndexError("invalid index")
 
     if arrayindex is not None:
         indexShape = indexShape[:arrayindex] + broadcastshape + indexShape[arrayindex:]

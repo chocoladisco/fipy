@@ -143,7 +143,7 @@ if __name__ == '__main__':
     totalTime = 0
 
     for step in range(steps):
-        print 'step',step
+        print('step',step)
         velocity.setValue(surfactantVariable.interfaceVar * k)
         distanceVariable.extendVariable(velocity)
         timeStepDuration = cfl * dx / velocity.max()
@@ -161,9 +161,9 @@ if __name__ == '__main__':
         answer = initialSurfactantValue * initialRadius / finalRadius
         coverage = surfactantVariable.interfaceVar
         error = (coverage / answer - 1)**2 * (coverage > 1e-3)
-        print 'error', numerix.sqrt(numerix.sum(error) / numerix.sum(error > 0))
+        print('error', numerix.sqrt(numerix.sum(error) / numerix.sum(error > 0)))
 
 
 
 
-    raw_input('finished')
+    input('finished')
